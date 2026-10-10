@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0
+
+- Add five visually distinct, theme-aware animations: star ripple, lace blossom, comet shower, star orbit and butterfly flutter.
+- Shuffle all five once per group of accepted clicks, with no immediate repeat across group boundaries.
+- Keep effects compact (approximately 110 CSS pixels) and short (720–900 ms), with the existing drag filter, eight-effect cap, reduced-motion support and disposal behavior.
+- Update all five metadata/preview languages, paired English/Chinese documentation and the five-click demo.
+
 ## 1.1.0
 
 - Publish an independent, ready-to-install DSH plugin package with native plugin-list localization.

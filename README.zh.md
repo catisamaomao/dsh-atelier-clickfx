@@ -8,7 +8,7 @@
 
 <p align="center"><img src="icon.svg" width="88" alt="工坊星涟：深蓝底色上的金色星芒"></p>
 
-适用于 **DeepSeek Harness Web GUI 和桌面端**的独立视觉插件。鼠标点击后，柔金细涟漪、瓷白四角星和少量长春花蓝微粒轻盈散开，在 **720 毫秒**内消散。
+适用于 **DeepSeek Harness Web GUI 和桌面端**的独立视觉插件。鼠标点击后，在**星光涟漪、蕾丝花绽、流星轻雨、星环回旋、星蝶轻舞**五种动效间随机轮换。统一沿用当前皮肤的柔金、瓷白和长春花蓝，在 **0.72–0.9 秒**内轻盈消散。
 
 为「深海女仆工坊」的深蓝、柔金和蕾丝风格设计，直接读取当前皮肤配色，不附带第三方皮肤图片。遵循 [dsh-web-all 系列](https://github.com/zhu1090093659/dsh-web)使用的 DSH 原生包、profile patch 和浏览器模块规范；本插件是独立项目，并未收录到该全家桶。
 
@@ -19,7 +19,7 @@
 **桌面端**：先完全退出应用，再在 macOS 终端、Windows PowerShell 或 Linux Shell 中执行：
 
 ```sh
-dsh plugin --profile desktop add "https://github.com/catisamaomao/dsh-atelier-clickfx/releases/download/v1.1.0/dsh-atelier-clickfx-1.1.0.tgz"
+dsh plugin --profile desktop add "https://github.com/catisamaomao/dsh-atelier-clickfx/releases/download/v1.2.0/dsh-atelier-clickfx-1.2.0.tgz"
 ```
 
 重新打开桌面应用，在「插件」中启用「工坊星涟」（名称随界面语言切换；包标识为 `dsh-atelier-clickfx`）。
@@ -27,7 +27,7 @@ dsh plugin --profile desktop add "https://github.com/catisamaomao/dsh-atelier-cl
 **Web GUI**：
 
 ```sh
-dsh plugin --profile web add "https://github.com/catisamaomao/dsh-atelier-clickfx/releases/download/v1.1.0/dsh-atelier-clickfx-1.1.0.tgz"
+dsh plugin --profile web add "https://github.com/catisamaomao/dsh-atelier-clickfx/releases/download/v1.2.0/dsh-atelier-clickfx-1.2.0.tgz"
 dsh web
 ```
 
@@ -36,14 +36,16 @@ dsh web
 也可以从 [Releases](https://github.com/catisamaomao/dsh-atelier-clickfx/releases) 下载 `.tgz`，将绝对路径填入 DSH 插件安装器；或者安装指定标签源码：
 
 ```sh
-dsh plugin --profile desktop add "github:catisamaomao/dsh-atelier-clickfx#v1.1.0"
+dsh plugin --profile desktop add "github:catisamaomao/dsh-atelier-clickfx#v1.2.0"
 ```
 
 仓库包含可直接加载的 JavaScript，安装不运行构建脚本。Release 同时提供安装包的 `SHA256SUMS.txt` 校验文件。本版本通过 GitHub 分发，尚未发布到 npm。
 
 ## 行为
 
-- 鼠标或触控笔主键短按，产生一组范围约 90 CSS 像素的特效。
+- 鼠标或触控笔主键短按，产生一组范围约 110 CSS 像素的特效。
+- 每组 5 次有效点击将五种动效各播放一次，组内顺序随机；相邻两组交界也不会连续重复。拖拽、长按及被限流的点击不消耗轮换次数。
+- 五种动效的形状和运动轨迹各不相同，不只是换颜色；每次点击都重新读取当前皮肤配色。
 - 拖拽、长按、右键和触屏滚动不触发。
 - 特效层不接收输入或抢占焦点；无音效、鼠标拖尾和空闲动画。
 - 最多同时显示 8 组特效，密集点击会限流；Canvas 绘图缓冲区约限制为 800 万像素。
@@ -51,6 +53,16 @@ dsh plugin --profile desktop add "github:catisamaomao/dsh-atelier-clickfx#v1.1.0
 - 即时遵循系统「减少动态效果」设置：开启时不播放。
 - 停用时移除 Canvas、撤销事件监听并取消动画帧。
 - 不联网、不采集遥测、不调用模型、不访问存储、不持久化点击记录。
+
+### 五种动效
+
+| 动效 | 形状与运动 | 时长 |
+| --- | --- | --- |
+| 星光涟漪 | 纤细圆形波纹，四角星向外轻散 | 720 毫秒 |
+| 蕾丝花绽 | 六瓣轮廓花向外舒展 | 820 毫秒 |
+| 流星轻雨 | 短轨迹星群划过，轨迹随星光淡出 | 760 毫秒 |
+| 星环回旋 | 星光沿倾斜的椭圆轨道回旋 | 900 毫秒 |
+| 星蝶轻舞 | 蝴蝶轮廓轻轻振翅，向外飘散并略微上扬 | 860 毫秒 |
 
 ## 多语言
 
@@ -74,9 +86,9 @@ DSH 插件列表的名称和说明，以及独立预览页，支持 **English、
 
 | 用途 | 优先读取 | 回退值 |
 | --- | --- | --- |
-| 涟漪与暖色星芒 | `--maid-gold-soft`，其次 `--maid-gold` | `#e2cfaa` |
-| 淡蓝断弧与微粒 | `--maid-periwinkle`，其次 `--dsw-alias-brand-primary` | `#8ea5da` |
-| 中心星光 | `--maid-porcelain`，其次 `--dsw-alias-label-primary` | `#f8f6f0` |
+| 暖色轮廓与星芒 | `--maid-gold-soft`，其次 `--maid-gold` | `#e2cfaa` |
+| 淡蓝点缀与微粒 | `--maid-periwinkle`，其次 `--dsw-alias-brand-primary` | `#8ea5da` |
+| 瓷白高光 | `--maid-porcelain`，其次 `--dsw-alias-label-primary` | `#f8f6f0` |
 
 没有女仆皮肤或 dsh-web-all 也可以运行。不修改这两个包、不新增设置面板、不切换所选皮肤。效果作用于应用渲染内容区，不覆盖系统标题栏、原生菜单或文件对话框。
 
@@ -91,7 +103,7 @@ npm run pack:check
 npm pack
 ```
 
-无需安装依赖。在现代浏览器打开 `preview.html`，即可体验与 DSH **相同 `client.js`** 渲染的特效；预览也遵循减少动态效果设置。
+无需安装依赖。在现代浏览器打开 `preview.html`，即可体验与 DSH **相同 `client.js`** 渲染的特效；演示按钮沿同一随机轮换序列播放五次轻触，预览也遵循减少动态效果设置。
 
 `index.js` 是刻意保持空白的宿主入口；`client.js` 注册 DSH 懒加载浏览器模块，并通过 `ctx.effect` 管理特效生命周期。`cordis.patch.yml` 新增一个可单独开关的插件行，`package.json` 与 `locale/*` 导出公开元信息。
 

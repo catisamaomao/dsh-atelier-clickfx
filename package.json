@@ -1,7 +1,7 @@
 {
   "name": "dsh-atelier-clickfx",
-  "version": "1.1.0",
-  "description": "Theme-aware gold ripples, porcelain stars and periwinkle particles for DeepSeek Harness.",
+  "version": "1.2.0",
+  "description": "Five non-repeating, theme-aware click animations for DeepSeek Harness: ripples, lace blooms, comets, orbits and butterflies.",
   "type": "module",
   "main": "./index.js",
   "exports": { ".": "./index.js", "./client": "./client.js", "./package.json": "./package.json", "./locale/*": "./locale/*" },

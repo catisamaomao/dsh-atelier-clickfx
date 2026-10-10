@@ -6,78 +6,140 @@
 body:before{content:"";position:fixed;inset:16px;border:1px solid #c5a46855;pointer-events:none}body:after{content:"";position:fixed;inset:22px;border:1px solid #c5a46822;pointer-events:none}
 main{max-width:1050px;margin:auto;padding:68px 64px 48px}.eyebrow{font-size:10px;letter-spacing:4px;color:#c5a468;display:flex;align-items:center;gap:18px}.eyebrow:after{content:"";height:1px;background:#c5a46850;flex:1}header{display:flex;justify-content:space-between;align-items:end;margin:40px 0 26px}h1{font:400 47px/1.2 "Songti SC",serif;letter-spacing:6px;margin:0 0 13px}p{color:#aabbdf;font-size:13px;line-height:1.9;margin:0}.badge{font-size:10px;letter-spacing:2px;border:1px solid #c5a46870;border-radius:99px;color:#e2cfaa;padding:8px 13px}
 .stage{min-height:340px;border:1px solid #c5a46865;border-radius:26px;background:linear-gradient(140deg,#1c2d55cc,#0e1b3c);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 25px 70px #0004}.stage:before{content:"";position:absolute;inset:7px;border:1px solid #c5a46822;border-radius:20px;pointer-events:none}.center{text-align:center;pointer-events:none}.crest{color:#e2cfaa;font-size:44px;line-height:1;margin-bottom:22px;text-shadow:0 0 24px #c5a46840}.center h2{font-family:"Songti SC",serif;font-weight:400;font-size:23px;letter-spacing:3px;margin:0 0 14px}.center p{font-size:11px;letter-spacing:1px}.corner{position:absolute;color:#c5a46899;font-family:serif;font-size:21px}.c1{top:18px;left:23px}.c2{bottom:18px;right:23px}.line{width:68px;height:1px;background:linear-gradient(90deg,transparent,#c5a468,transparent);margin:22px auto 0}
-.details{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin:29px 0 34px}.label{font-size:11px;letter-spacing:2px;color:#e2cfaa;margin-bottom:8px}.desc{font-size:11px;color:#98abd3;line-height:1.8}.dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#c5a468;margin-right:8px}.dot.blue{background:#8ea5da}.dot.white{background:#f8f6f0}footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #c5a46833;padding-top:22px;gap:20px}button{border:1px solid #c5a46899;color:#e2cfaa;border-radius:8px;background:#1c2e56;padding:11px 20px;font:inherit;font-size:12px;cursor:pointer}button:hover{background:#2a3d69}button:focus-visible{outline:2px solid #e2cfaa;outline-offset:4px}.note{font-size:10px;color:#8294bc}.status{font-size:11px;color:#b4c4e5;min-height:20px;margin-top:12px}
+.details{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;margin:29px 0 34px}.label{font-size:11px;letter-spacing:2px;color:#e2cfaa;margin-bottom:8px}.desc{font-size:11px;color:#98abd3;line-height:1.8}.dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#c5a468;margin-right:8px}.dot.blue{background:#8ea5da}.dot.white{background:#f8f6f0}footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #c5a46833;padding-top:22px;gap:20px}button{border:1px solid #c5a46899;color:#e2cfaa;border-radius:8px;background:#1c2e56;padding:11px 20px;font:inherit;font-size:12px;cursor:pointer}button:disabled{opacity:.6;cursor:default}button:hover{background:#2a3d69}button:focus-visible{outline:2px solid #e2cfaa;outline-offset:4px}.note{font-size:10px;color:#8294bc}.status{font-size:11px;color:#b4c4e5;min-height:20px;margin-top:12px}
 @media(max-width:700px){main{padding:48px 32px}.badge{display:none}h1{font-size:35px}.stage{min-height:310px}.details{gap:14px}.desc{font-size:10px}footer{align-items:start;flex-direction:column}}
 .toolbar{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:20px;color:#aabbdf;font-size:11px}.toolbar select{max-width:180px;background:#1c2e56;color:#e2cfaa;border:1px solid #c5a46870;border-radius:6px;padding:7px 10px;font:inherit}.toolbar select:focus-visible{outline:2px solid #e2cfaa;outline-offset:4px}.eyebrow-copy{display:inline}h1{overflow-wrap:anywhere}.desc{white-space:pre-line}html[lang="ru"] h1,html[lang="en"] h1{letter-spacing:2px;font-size:40px}@media(max-width:700px){html[lang="ru"] h1,html[lang="en"] h1{font-size:30px}.details{grid-template-columns:1fr}.toolbar{justify-content:flex-start}}
 </style>
-</head><body><main><div class="eyebrow"><span class="eyebrow-copy" data-i18n="eyebrow">ATELIER / INTERACTION STUDY</span><span>01</span></div>
+</head><body><main><div class="eyebrow"><span class="eyebrow-copy" data-i18n="eyebrow">ATELIER / INTERACTION STUDY</span><span>05</span></div>
 <div class="toolbar"><label for="language" data-i18n="language">Language</label><select id="language"><option value="en" lang="en">English</option><option value="zh-CN" lang="zh-CN">简体中文</option><option value="zh-TW" lang="zh-TW">繁體中文</option><option value="ja" lang="ja">日本語</option><option value="ru" lang="ru">Русский</option></select></div>
-<header><div><h1 data-i18n="name">Atelier Click FX</h1><p data-i18n="tagline">Turn a gentle click into a fleeting constellation.</p></div><div class="badge">DEEPSEEK HARNESS</div></header>
-<section class="stage" id="stage" data-i18n-aria="stageAria" aria-label="Click effect preview area"><span class="corner c1" aria-hidden="true">✧</span><div class="center"><div class="crest" aria-hidden="true">✦</div><h2 data-i18n="stageTitle">Click anywhere here</h2><p data-i18n="palette">Soft gold ripples · Porcelain stars · Periwinkle blue</p><div class="line"></div></div><span class="corner c2" aria-hidden="true">✧</span></section>
-<div class="details"><div><div class="label"><span class="dot"></span><span data-i18n="goldTitle">Golden ripples</span></div><div class="desc" data-i18n="goldDescription">Fine lines unfold outward, echoing the atelier’s golden trim.</div></div><div><div class="label"><span class="dot white"></span><span data-i18n="starTitle">Four-point stars</span></div><div class="desc" data-i18n="starDescription">Six stars drift outward, fading in about 0.72 seconds.</div></div><div><div class="label"><span class="dot blue"></span><span data-i18n="blueTitle">Blue glimmers</span></div><div class="desc" data-i18n="blueDescription">Sparse particles, no trails: your content stays in focus.</div></div></div>
-<footer><button id="demo" type="button" data-i18n="demo">Play three clicks</button><span class="note" data-i18n="note">Click the page to try it · Effects pause when reduced motion is enabled</span></footer><p class="status" id="status" aria-live="polite"></p></main>
+<header><div><h1 data-i18n="name">Atelier Click FX</h1><p data-i18n="tagline">Five fleeting gestures, one atelier palette.</p></div><div class="badge">DEEPSEEK HARNESS</div></header>
+<section class="stage" id="stage" data-i18n-aria="stageAria" aria-label="Click effect preview area"><span class="corner c1" aria-hidden="true">✧</span><div class="center"><div class="crest" aria-hidden="true">✦</div><h2 data-i18n="stageTitle">Click anywhere here</h2><p data-i18n="palette">Five shapes in soft gold, porcelain white and periwinkle blue</p><div class="line"></div></div><span class="corner c2" aria-hidden="true">✧</span></section>
+<div class="details"><div><div class="label"><span class="dot"></span><span data-i18n="rippleTitle">Star ripple</span></div><div class="desc" data-i18n="rippleDescription">Fine waves and four-point stars drift outward. 720 ms.</div></div><div><div class="label"><span class="dot white"></span><span data-i18n="bloomTitle">Lace blossom</span></div><div class="desc" data-i18n="bloomDescription">A delicate six-petal flower unfolds. 820 ms.</div></div><div><div class="label"><span class="dot blue"></span><span data-i18n="cometsTitle">Comet shower</span></div><div class="desc" data-i18n="cometsDescription">Little stars sweep across short, fading paths. 760 ms.</div></div><div><div class="label"><span class="dot"></span><span data-i18n="orbitTitle">Star orbit</span></div><div class="desc" data-i18n="orbitDescription">Stars turn along tilted elliptical rings. 900 ms.</div></div><div><div class="label"><span class="dot white"></span><span data-i18n="butterfliesTitle">Butterfly flutter</span></div><div class="desc" data-i18n="butterfliesDescription">Butterfly outlines flap gently and drift outward. 860 ms.</div></div></div>
+<footer><button id="demo" type="button" data-i18n="demo">Play five random clicks</button><span class="note" data-i18n="note">Each group of five accepted clicks plays all five effects · Respects reduced motion</span></footer><p class="status" id="status" aria-live="polite"></p></main>
 <script>let cleanup;window.__ModuleLoader__={load({factory}){factory().apply({effect(fn){cleanup=fn()}})}};</script>
 <script src="client.js"></script>
 <script>
 // This switch changes this standalone preview only, never the DSH language.
 const translations = {
-  en: {
-    title: 'Atelier Click FX · Preview', name: 'Atelier Click FX', language: 'Language',
-    eyebrow: 'ATELIER / INTERACTION STUDY', tagline: 'Turn a gentle click into a fleeting constellation.',
-    stageAria: 'Click effect preview area', stageTitle: 'Click anywhere here',
-    palette: 'Soft gold ripples · Porcelain stars · Periwinkle blue',
-    goldTitle: 'Golden ripples', goldDescription: 'Fine lines unfold outward,\nechoing the atelier’s golden trim.',
-    starTitle: 'Four-point stars', starDescription: 'Six stars drift outward,\nfading in about 0.72 seconds.',
-    blueTitle: 'Blue glimmers', blueDescription: 'Sparse particles, no trails:\nyour content stays in focus.',
-    demo: 'Play three clicks', note: 'Click the page to try it · Effects pause when reduced motion is enabled',
-    reducedStatus: 'Reduced motion is enabled on this device. The effect stays still.',
-    playingStatus: 'This preview uses the same renderer as the DSH plugin.'
+  "en": {
+    "title": "Atelier Click FX · Preview",
+    "name": "Atelier Click FX",
+    "language": "Language",
+    "eyebrow": "ATELIER / FIVE CLICK GESTURES",
+    "tagline": "Five fleeting gestures, one atelier palette.",
+    "stageAria": "Click effect preview area",
+    "stageTitle": "Click anywhere here",
+    "palette": "Five shapes in soft gold, porcelain white and periwinkle blue",
+    "rippleTitle": "Star ripple",
+    "rippleDescription": "Fine waves and four-point stars\ndrift outward. 720 ms.",
+    "bloomTitle": "Lace blossom",
+    "bloomDescription": "A delicate six-petal flower\nunfolds. 820 ms.",
+    "cometsTitle": "Comet shower",
+    "cometsDescription": "Little stars sweep across\nshort, fading paths. 760 ms.",
+    "orbitTitle": "Star orbit",
+    "orbitDescription": "Stars turn along tilted\nelliptical rings. 900 ms.",
+    "butterfliesTitle": "Butterfly flutter",
+    "butterfliesDescription": "Butterfly outlines flap gently\nand drift outward. 860 ms.",
+    "demo": "Play five random clicks",
+    "note": "Each group of five accepted clicks plays all five effects · Respects reduced motion",
+    "reducedStatus": "Reduced motion is enabled on this device. No effects will play.",
+    "playingStatus": "Same renderer as DSH. Each group is shuffled; adjacent effects never repeat."
   },
-  'zh-CN': {
-    title: '工坊星涟 · 点击特效预览', name: '工坊星涟', language: '语言',
-    eyebrow: '工坊 / 点击交互', tagline: '把一次轻触，变成转瞬即逝的星光。',
-    stageAria: '点击特效体验区域', stageTitle: '在这里，轻点一下', palette: '柔金涟漪 · 瓷白星光 · 长春花蓝',
-    goldTitle: '柔金涟漪', goldDescription: '细线向外舒展\n呼应工坊的金色饰边',
-    starTitle: '四角星光', starDescription: '六颗星芒轻盈散开\n约 0.72 秒自然消隐',
-    blueTitle: '淡蓝微尘', blueDescription: '低密度、无拖尾\n让正文依然是画面主角',
-    demo: '播放三次轻触', note: '可直接点击页面体验 · 系统开启“减少动态效果”时不播放',
-    reducedStatus: '当前系统已开启减少动态效果，插件保持静止。',
-    playingStatus: '与应用插件使用同一份渲染代码。'
+  "zh-CN": {
+    "title": "工坊星涟 · 点击特效预览",
+    "name": "工坊星涟",
+    "language": "语言",
+    "eyebrow": "工坊 / 五种轻触",
+    "tagline": "每次轻触，各有姿态；柔金与星光始终相伴。",
+    "stageAria": "点击特效体验区域",
+    "stageTitle": "在这里，轻点一下",
+    "palette": "五种形态 · 柔金、瓷白与长春花蓝",
+    "rippleTitle": "星光涟漪",
+    "rippleDescription": "纤细波纹与四角星\n轻盈向外舒展 · 720 毫秒",
+    "bloomTitle": "蕾丝花绽",
+    "bloomDescription": "六瓣轮廓花\n如蕾丝般缓缓绽开 · 820 毫秒",
+    "cometsTitle": "流星轻雨",
+    "cometsDescription": "短轨迹星群划过\n星光与轨迹一同淡出 · 760 毫秒",
+    "orbitTitle": "星环回旋",
+    "orbitDescription": "星光沿倾斜椭圆轨道\n轻轻回旋 · 900 毫秒",
+    "butterfliesTitle": "星蝶轻舞",
+    "butterfliesDescription": "蝴蝶轮廓轻轻振翅\n向外飘散并略微上扬 · 860 毫秒",
+    "demo": "播放五次随机轻触",
+    "note": "每组五次有效点击涵盖五种动效 · 遵循系统“减少动态效果”设置",
+    "reducedStatus": "当前系统已开启减少动态效果，不播放特效。",
+    "playingStatus": "与 DSH 使用同一份渲染代码；每组顺序随机，相邻两次不重复。"
   },
-  'zh-TW': {
-    title: '工坊星漣 · 點擊特效預覽', name: '工坊星漣', language: '語言',
-    eyebrow: '工坊 / 點擊互動', tagline: '讓一次輕觸，化為轉瞬即逝的星光。',
-    stageAria: '點擊特效體驗區域', stageTitle: '在這裡，輕點一下', palette: '柔金漣漪 · 瓷白星光 · 淡藍微光',
-    goldTitle: '柔金漣漪', goldDescription: '細線向外舒展\n呼應工坊的金色飾邊',
-    starTitle: '四角星光', starDescription: '六顆星芒輕盈散開\n約 0.72 秒自然淡出',
-    blueTitle: '淡藍微塵', blueDescription: '低密度、不留殘影\n讓內文依然是畫面主角',
-    demo: '播放三次輕觸', note: '可直接點擊頁面體驗 · 系統開啟「減少動態效果」時不播放',
-    reducedStatus: '系統已開啟減少動態效果，外掛保持靜止。',
-    playingStatus: '此預覽與應用程式外掛使用相同的繪製程式碼。'
+  "zh-TW": {
+    "title": "工坊星漣 · 點擊特效預覽",
+    "name": "工坊星漣",
+    "language": "語言",
+    "eyebrow": "工坊 / 五種輕觸",
+    "tagline": "每次輕觸，各有姿態；柔金與星光始終相伴。",
+    "stageAria": "點擊特效體驗區域",
+    "stageTitle": "在這裡，輕點一下",
+    "palette": "五種形態 · 柔金、瓷白與淡藍微光",
+    "rippleTitle": "星光漣漪",
+    "rippleDescription": "纖細波紋與四角星\n輕盈向外舒展 · 720 毫秒",
+    "bloomTitle": "蕾絲花綻",
+    "bloomDescription": "六瓣輪廓花\n如蕾絲般緩緩綻開 · 820 毫秒",
+    "cometsTitle": "流星輕雨",
+    "cometsDescription": "短軌跡星群劃過\n星光與軌跡一同淡出 · 760 毫秒",
+    "orbitTitle": "星環迴旋",
+    "orbitDescription": "星光沿傾斜橢圓軌道\n輕輕迴旋 · 900 毫秒",
+    "butterfliesTitle": "星蝶輕舞",
+    "butterfliesDescription": "蝴蝶輪廓輕輕振翅\n向外飄散並略微上揚 · 860 毫秒",
+    "demo": "播放五次隨機輕觸",
+    "note": "每組五次有效點擊涵蓋五種動效 · 遵循系統「減少動態效果」設定",
+    "reducedStatus": "系統已開啟減少動態效果，不播放特效。",
+    "playingStatus": "與 DSH 使用相同的繪製程式碼；每組順序隨機，相鄰兩次不重複。"
   },
-  ja: {
-    title: '工房の星しずく · クリックエフェクトのプレビュー', name: '工房の星しずく', language: '言語',
-    eyebrow: '工房 / クリックの演出', tagline: 'ひとつのクリックが、一瞬の星のきらめきに。',
-    stageAria: 'クリックエフェクトの体験エリア', stageTitle: 'ここをクリックしてみてください',
-    palette: '淡い金色の波紋 · 陶器のような白い星 · 青紫のきらめき',
-    goldTitle: '金色の波紋', goldDescription: '細い線が外へと広がり\n工房の金色の縁取りに寄り添います',
-    starTitle: '四つ角の星', starDescription: '6 つの星がふわりと広がり\n約 0.72 秒で消えていきます',
-    blueTitle: '青いきらめき', blueDescription: '粒は控えめに、軌跡は残さず\n本文の読みやすさを保ちます',
-    demo: '3 回のクリックを再生', note: 'ページをクリックして体験 · 動きを減らす設定が有効なときは再生しません',
-    reducedStatus: 'この端末では動きを減らす設定が有効なため、エフェクトを再生しません。',
-    playingStatus: 'このプレビューは DSH プラグインと同じ描画コードを使っています。'
+  "ja": {
+    "title": "工房の星しずく · クリックエフェクトのプレビュー",
+    "name": "工房の星しずく",
+    "language": "言語",
+    "eyebrow": "工房 / 5 つのクリック演出",
+    "tagline": "5 つのしぐさを、工房になじむ色合いで。",
+    "stageAria": "クリックエフェクトの体験エリア",
+    "stageTitle": "ここをクリックしてみてください",
+    "palette": "5 つの形 · 淡い金色、陶器の白、青紫の光",
+    "rippleTitle": "星の波紋",
+    "rippleDescription": "細い波紋と四つ角の星が\n外へ広がります · 720 ms",
+    "bloomTitle": "レースの花",
+    "bloomDescription": "6 枚の花びらの輪郭が\nそっと開きます · 820 ms",
+    "cometsTitle": "流星の小雨",
+    "cometsDescription": "小さな星が短い軌跡を描き\n消えていきます · 760 ms",
+    "orbitTitle": "星の軌道",
+    "orbitDescription": "傾いた楕円の軌道を\n星が巡ります · 900 ms",
+    "butterfliesTitle": "蝶の舞い",
+    "butterfliesDescription": "蝶の輪郭がそっと羽ばたき\n外へ舞い広がります · 860 ms",
+    "demo": "ランダムなクリックを 5 回再生",
+    "note": "有効なクリック 5 回の各組で全 5 種類を再生 · 動きを減らす設定に対応",
+    "reducedStatus": "この端末では動きを減らす設定が有効なため、エフェクトを再生しません。",
+    "playingStatus": "DSH と同じ描画コードを使用。各組の順序はランダムで、同じ演出は連続しません。"
   },
-  ru: {
-    title: 'Звёздная рябь · Предпросмотр', name: 'Звёздная рябь', language: 'Язык',
-    eyebrow: 'АТЕЛЬЕ / ЭФФЕКТ КЛИКА', tagline: 'Лёгкий щелчок превращается в мимолётное созвездие.',
-    stageAria: 'Область предпросмотра эффекта клика', stageTitle: 'Нажмите в этой области',
-    palette: 'Золотая рябь · Фарфоровые звёзды · Голубое мерцание',
-    goldTitle: 'Золотая рябь', goldDescription: 'Тонкие линии расходятся,\nповторяя золотую отделку ателье.',
-    starTitle: 'Четырёхлучевые звёзды', starDescription: 'Шесть звёзд разлетаются\nи гаснут примерно за 0,72 секунды.',
-    blueTitle: 'Голубое мерцание', blueDescription: 'Немного частиц, без шлейфов:\nтекст остаётся в центре внимания.',
-    demo: 'Показать три клика', note: 'Нажмите на страницу · При уменьшении движения эффекты не воспроизводятся',
-    reducedStatus: 'На устройстве включено уменьшение движения. Эффект не воспроизводится.',
-    playingStatus: 'Предпросмотр использует тот же код отрисовки, что и плагин DSH.'
+  "ru": {
+    "title": "Звёздная рябь · Предпросмотр",
+    "name": "Звёздная рябь",
+    "language": "Язык",
+    "eyebrow": "АТЕЛЬЕ / ПЯТЬ ЭФФЕКТОВ КЛИКА",
+    "tagline": "Пять лёгких движений в единой палитре ателье.",
+    "stageAria": "Область предпросмотра эффекта клика",
+    "stageTitle": "Нажмите в этой области",
+    "palette": "Пять форм · Мягкое золото, фарфоровый белый и голубой",
+    "rippleTitle": "Звёздная рябь",
+    "rippleDescription": "Тонкие волны и звёзды\nрасходятся в стороны. 720 мс.",
+    "bloomTitle": "Кружевной цветок",
+    "bloomDescription": "Раскрывается тонкий контур\nшести лепестков. 820 мс.",
+    "cometsTitle": "Дождь комет",
+    "cometsDescription": "Звёздочки пролетают по\nкоротким следам. 760 мс.",
+    "orbitTitle": "Орбиты звёзд",
+    "orbitDescription": "Звёзды кружатся по наклонным\nэллиптическим орбитам. 900 мс.",
+    "butterfliesTitle": "Танец бабочек",
+    "butterfliesDescription": "Бабочки мягко машут крыльями\nи разлетаются в стороны. 860 мс.",
+    "demo": "Показать пять случайных кликов",
+    "note": "Каждая группа из пяти принятых кликов показывает все пять эффектов · Учитывает уменьшение движения",
+    "reducedStatus": "На устройстве включено уменьшение движения. Эффекты не воспроизводятся.",
+    "playingStatus": "Тот же код отрисовки, что и в DSH. Порядок в группе случайный, повторов подряд нет."
   }
 };
 function resolveLanguage(value) {
@@ -108,16 +170,21 @@ setLanguage(new URLSearchParams(location.search).get('lang') || navigator.langua
 document.getElementById('language').addEventListener('change', event => setLanguage(event.target.value));
 motionPreference.addEventListener('change', updateStatus);
 let timers=[];
-document.getElementById('demo').addEventListener('click',()=>{
+const demoButton = document.getElementById('demo');
+demoButton.addEventListener('click',()=>{
   timers.forEach(clearTimeout);timers=[];
   statusShown = true;
   updateStatus();
+  if (motionPreference.matches) return;
   const area=document.getElementById('stage').getBoundingClientRect();
-  [.25,.5,.75].forEach((fraction,i)=>timers.push(setTimeout(()=>{
-    const event={bubbles:true,pointerType:'mouse',pointerId:99,isPrimary:true,button:0,clientX:area.left+area.width*fraction,clientY:area.top+area.height*.52};
+  demoButton.disabled = true;
+  // Pointer events reuse the production shuffle; this demo cannot select an effect.
+  [.2,.35,.5,.65,.8].forEach((fraction,i)=>timers.push(setTimeout(()=>{
+    const event={bubbles:true,pointerType:'mouse',pointerId:99,isPrimary:true,button:0,clientX:area.left+area.width*fraction,clientY:area.top+area.height*(i%2 ? .6 : .4)};
     document.dispatchEvent(new PointerEvent('pointerdown',event));
     document.dispatchEvent(new PointerEvent('pointerup',event));
-  },300+i*300)));
+  },950+i*950)));
+  timers.push(setTimeout(()=>{demoButton.disabled=false;timers=[]},5700));
 });
 window.addEventListener('pagehide',()=>{timers.forEach(clearTimeout);motionPreference.removeEventListener('change',updateStatus);cleanup?.()});
 </script></body></html>

@@ -4,9 +4,18 @@ import test from 'node:test';
 import vm from 'node:vm';
 
 const source = readFileSync(new URL('../client.js', import.meta.url), 'utf8');
+const variants = ['ripple', 'bloom', 'comets', 'orbit', 'butterflies'];
+const lifetimes = { ripple: 720, bloom: 820, comets: 760, orbit: 900, butterflies: 860 };
+
+function seededRandom(seed = 1) {
+  return () => {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    return seed / 0x100000000;
+  };
+}
 
 // A small browser boundary fake: no real display or platform UI is exercised.
-function harness({ canvasAvailable = true, reducedMotion = false } = {}) {
+function harness({ canvasAvailable = true, reducedMotion = false, random = seededRandom() } = {}) {
   class Target {
     handlers = new Map();
     addEventListener(type, callback, options) {
@@ -20,16 +29,27 @@ function harness({ canvasAvailable = true, reducedMotion = false } = {}) {
     count() { return [...this.handlers.values()].reduce((count, handlers) => count + handlers.size, 0); }
   }
 
-  const stats = { arcs: 0, clears: 0, fills: 0, colors: [] };
+  const stats = { arcs: 0, clears: 0, fills: 0, colors: [], calls: [], randomCalls: 0 };
+  let depth = 0;
   const context = new Proxy({}, {
     get(target, key) {
-      if (key === 'arc') return () => stats.arcs++;
-      if (key === 'clearRect') return () => stats.clears++;
-      if (key === 'fill') return () => stats.fills++;
-      return target[key] ?? (() => {});
+      if (key in target) return target[key];
+      return (...args) => {
+        for (const value of args) {
+          if (typeof value === 'number') assert.ok(Number.isFinite(value), `${key} received non-finite geometry`);
+        }
+        stats.calls.push({ method: key, args, depth });
+        if (key === 'save') depth++;
+        if (key === 'restore') { depth--; assert.ok(depth >= 0, 'Canvas restore must have a matching save'); }
+        if (key === 'arc') stats.arcs++;
+        if (key === 'clearRect') stats.clears++;
+        if (key === 'fill') stats.fills++;
+      };
     },
     set(target, key, value) {
       if (key === 'fillStyle' || key === 'strokeStyle') stats.colors.push(value);
+      if (typeof value === 'number') assert.ok(Number.isFinite(value), `${key} must remain finite`);
+      if (key === 'globalAlpha') assert.ok(value >= 0 && value <= 1, 'Canvas alpha must stay in range');
       target[key] = value;
       return true;
     },
@@ -66,6 +86,7 @@ function harness({ canvasAvailable = true, reducedMotion = false } = {}) {
     },
   };
   vm.runInNewContext(source, {
+    Math: Object.assign(Object.create(Math), { random: () => { stats.randomCalls++; return random(); } }),
     window,
     document,
     performance: { now: () => clock },
@@ -86,9 +107,10 @@ function harness({ canvasAvailable = true, reducedMotion = false } = {}) {
     const queue = [...frames.values()];
     frames.clear();
     queue.forEach(callback => callback(time));
+    assert.equal(depth, 0, 'each frame must restore its Canvas state');
   };
   return {
-    document, window, media, nodes, frames, stats, cssValues, mount, click, event, step,
+    document, window, media, nodes, frames, stats, cssValues, mount, click, event, step, plugin,
     clock: time => { clock = time; }, cleanup: () => cleanup(),
   };
 }
@@ -106,8 +128,79 @@ test('a click animates, then returns to idle without a scheduled frame', t => {
   assert.equal(h.frames.size, 1);
   h.step(180);
   assert.ok(h.stats.fills > 0);
-  h.step(730);
+  h.step(901);
   assert.equal(h.frames.size, 0);
+});
+
+test('random selection covers every style in each bag with no adjacent repeats across bags', t => {
+  const h = setup(t);
+  for (const random of [() => 0, () => 0.5, () => 0.999999, seededRandom(42)]) {
+    const pick = h.plugin.createVariantPicker(random);
+    const selections = Array.from({ length: 100 }, () => pick());
+    for (let index = 0; index < selections.length; index += variants.length) {
+      assert.deepEqual(selections.slice(index, index + variants.length).sort(), [...variants].sort());
+    }
+    for (let index = 1; index < selections.length; index++) {
+      assert.notEqual(selections[index], selections[index - 1]);
+    }
+  }
+});
+
+test('all five styles draw distinct finite geometry and expire at their own lifetimes', t => {
+  // A constant random source makes production seed draws irrelevant to bag order.
+  const h = setup(t, { random: () => 0.5 });
+  const pick = h.plugin.createVariantPicker(() => 0.5);
+  const signatures = new Map();
+  for (let index = 0; index < variants.length; index++) {
+    const variant = pick();
+    const start = index * 1000;
+    h.clock(start);
+    h.click();
+    h.step(start);
+    h.stats.calls.length = 0;
+    h.step(start + 180);
+    assert.ok(h.stats.calls.some(call => call.method === 'fill'), `${variant} should draw filled ornaments`);
+    assert.ok(h.stats.calls.some(call => call.method === 'stroke'), `${variant} should draw stroked ornaments`);
+    signatures.set(variant, h.stats.calls.map(call => call.method).join(','));
+    h.step(start + lifetimes[variant] - 1);
+    assert.equal(h.frames.size, 1, `${variant} should still be alive just before expiry`);
+    h.stats.calls.length = 0;
+    h.step(start + lifetimes[variant]);
+    assert.equal(h.frames.size, 0, `${variant} should return to idle at expiry`);
+    assert.ok(!h.stats.calls.some(call => call.method === 'fill' || call.method === 'stroke'));
+  }
+  assert.deepEqual([...signatures.keys()].sort(), [...variants].sort());
+  assert.equal(new Set(signatures.values()).size, variants.length, 'styles must have visibly different drawing paths');
+});
+
+test('ignored clicks do not consume a style from the random bag', t => {
+  const h = setup(t);
+  const initialRandomCalls = h.stats.randomCalls;
+  h.click({ button: 2 });
+  h.click({ pointerType: 'touch' });
+  h.click({ isPrimary: false });
+  h.event('pointerdown');
+  h.event('pointermove', { clientX: 170 });
+  h.event('pointerup');
+  h.event('pointerdown');
+  h.event('pointercancel');
+  h.event('pointerup');
+  h.document.hidden = true;
+  h.click();
+  h.document.hidden = false;
+  h.media.matches = true;
+  h.click();
+  h.media.matches = false;
+  h.event('pointerdown');
+  h.clock(1000);
+  h.event('pointerup');
+  assert.equal(h.stats.randomCalls, initialRandomCalls);
+  h.click();
+  assert.ok(h.stats.randomCalls > initialRandomCalls);
+  const acceptedRandomCalls = h.stats.randomCalls;
+  h.clock(1020);
+  h.click();
+  assert.equal(h.stats.randomCalls, acceptedRandomCalls, 'throttled clicks must not consume a style either');
 });
 
 test('overlay stays decorative and does not intercept pointer input', t => {
@@ -167,19 +260,18 @@ test('reduced motion suppresses clicks and stops active animation immediately', 
 });
 
 test('rapid input keeps one animation loop and caps concurrent effects at eight', t => {
-  const single = setup(t);
-  single.click();
-  single.step(10);
-  const arcsPerEffect = single.stats.arcs;
-  assert.ok(arcsPerEffect > 0);
   const rapid = setup(t);
   for (let index = 0; index < 30; index++) {
     rapid.clock(index * 50);
-    rapid.click();
+    rapid.click({ clientX: 100 + index, clientY: 180 });
   }
   assert.equal(rapid.frames.size, 1);
+  rapid.stats.calls.length = 0;
   rapid.step(1460);
-  assert.equal(rapid.stats.arcs, arcsPerEffect * 8);
+  const centers = rapid.stats.calls.filter(call => call.method === 'translate' && call.depth === 1);
+  assert.deepEqual(centers.map(call => call.args), Array.from({ length: 8 }, (_, index) => [122 + index, 180]));
+  rapid.step(2400);
+  assert.equal(rapid.frames.size, 0);
 });
 
 test('backgrounding, focus loss and resizing clear animations and pending gestures', t => {
@@ -234,7 +326,7 @@ test('theme colors are re-read for each click after a skin change', t => {
   h.click();
   h.step(180);
   assert.ok(h.stats.colors.includes('#aabbcc'));
-  h.step(730);
+  h.step(901);
   h.stats.colors.length = 0;
   h.cssValues.set('--maid-gold-soft', '#ccbbaa');
   h.clock(1000);

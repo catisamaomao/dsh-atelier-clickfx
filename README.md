@@ -8,7 +8,7 @@ English | [简体中文](README.zh.md)
 
 <p align="center"><img src="icon.svg" width="88" alt="Atelier Click FX: a gold star on a navy background"></p>
 
-A small, independent visual plugin for **DeepSeek Harness Web GUI and Desktop**. Mouse clicks blossom into a fine gold ripple, porcelain-white four-point stars and a few periwinkle particles, then fade in **720 ms**.
+A small, independent visual plugin for **DeepSeek Harness Web GUI and Desktop**. Mouse clicks randomly alternate between **five distinct animations**: star ripples, lace blossoms, comet showers, orbiting stars and fluttering butterflies. Each uses the current theme’s soft gold, porcelain white and periwinkle blue, then fades in **0.72–0.9 seconds**.
 
 Designed to complement the navy, gold and lace of **Maid Atelier / 深海女仆工坊**. It reads the active skin's colors and ships no third-party skin artwork. It uses the same native DSH package, profile-patch and browser-module conventions as the [dsh-web-all family](https://github.com/zhu1090093659/dsh-web), but is an independent plugin and is not bundled with that project.
 
@@ -19,7 +19,7 @@ Requires DSH **0.2.0-rc.2 or newer** with its `dsh` command available on PATH. D
 **Desktop:** fully quit the application, then run the following in Terminal, PowerShell or your Linux shell:
 
 ```sh
-dsh plugin --profile desktop add "https://github.com/catisamaomao/dsh-atelier-clickfx/releases/download/v1.1.0/dsh-atelier-clickfx-1.1.0.tgz"
+dsh plugin --profile desktop add "https://github.com/catisamaomao/dsh-atelier-clickfx/releases/download/v1.2.0/dsh-atelier-clickfx-1.2.0.tgz"
 ```
 
 Restart the desktop app. In **Plugins**, enable **Atelier Click FX** (its title follows your UI language; package ID: `dsh-atelier-clickfx`).
@@ -27,7 +27,7 @@ Restart the desktop app. In **Plugins**, enable **Atelier Click FX** (its title 
 **Web GUI:**
 
 ```sh
-dsh plugin --profile web add "https://github.com/catisamaomao/dsh-atelier-clickfx/releases/download/v1.1.0/dsh-atelier-clickfx-1.1.0.tgz"
+dsh plugin --profile web add "https://github.com/catisamaomao/dsh-atelier-clickfx/releases/download/v1.2.0/dsh-atelier-clickfx-1.2.0.tgz"
 dsh web
 ```
 
@@ -36,14 +36,16 @@ Restart an already running Web server. The quoted release URL works unchanged ac
 Alternatively, download the `.tgz` from [Releases](https://github.com/catisamaomao/dsh-atelier-clickfx/releases), add its absolute path in DSH's plugin installer, or install the tagged source:
 
 ```sh
-dsh plugin --profile desktop add "github:catisamaomao/dsh-atelier-clickfx#v1.1.0"
+dsh plugin --profile desktop add "github:catisamaomao/dsh-atelier-clickfx#v1.2.0"
 ```
 
 The repository contains ready-to-load JavaScript; installing it does not run a build script. Releases include a `SHA256SUMS.txt` for the packaged artifact. This release is distributed through GitHub, not the npm registry.
 
 ## Behavior
 
-- A short primary mouse or pen click creates one approximately 90 CSS-pixel burst.
+- A short primary mouse or pen click creates one approximately 110 CSS-pixel effect.
+- A shuffled bag plays all five effects once in each group of five accepted clicks; adjacent groups never repeat the same effect at their boundary. Dragged, long or rate-limited clicks do not consume a choice.
+- The effects differ in shape and motion, not just color. Their palette is sampled from the active skin on every click.
 - Drags, long presses, secondary buttons and touchscreen scrolling do not trigger it.
 - The overlay never intercepts input or takes focus. No sound, cursor trail or idle animation.
 - At most eight effects coexist; rapid clicks are rate-limited. The canvas backing buffer is capped at approximately eight million pixels.
@@ -51,6 +53,16 @@ The repository contains ready-to-load JavaScript; installing it does not run a b
 - **Reduce Motion** is respected immediately: no effects play while that preference is enabled.
 - Disabling the plugin disposes its canvas, event listeners and animation frame.
 - No network calls, telemetry, model usage, storage access or persistent click history.
+
+### Five animations
+
+| Effect | Shape and movement | Duration |
+| --- | --- | --- |
+| Star ripple | Fine circular waves with outward-drifting four-point stars | 720 ms |
+| Lace blossom | A delicate six-petal flower outline opening outward | 820 ms |
+| Comet shower | A small cluster of stars with short, fading trajectories | 760 ms |
+| Star orbit | Stars following tilted elliptical rings | 900 ms |
+| Butterfly flutter | Light butterfly outlines gently flapping and drifting outward | 860 ms |
 
 ## Languages
 
@@ -74,9 +86,9 @@ Colors are sampled on each click, so a skin change does not require restarting t
 
 | Role | Preferred token | Fallback |
 | --- | --- | --- |
-| Ripple and warm stars | `--maid-gold-soft`, then `--maid-gold` | `#e2cfaa` |
-| Blue arcs and particles | `--maid-periwinkle`, then `--dsw-alias-brand-primary` | `#8ea5da` |
-| Central sparkle | `--maid-porcelain`, then `--dsw-alias-label-primary` | `#f8f6f0` |
+| Warm outlines and stars | `--maid-gold-soft`, then `--maid-gold` | `#e2cfaa` |
+| Blue accents and particles | `--maid-periwinkle`, then `--dsw-alias-brand-primary` | `#8ea5da` |
+| Porcelain highlights | `--maid-porcelain`, then `--dsw-alias-label-primary` | `#f8f6f0` |
 
 The plugin remains usable without Maid Atelier or dsh-web-all. It does not edit either package, add settings panels or change the selected skin. It decorates the renderer's content area, not the operating system's title bar, menus or dialogs.
 
@@ -91,7 +103,7 @@ npm run pack:check
 npm pack
 ```
 
-No dependency installation is required. Open `preview.html` in a modern browser for an interactive demo using the **same `client.js`** as DSH. The preview also respects Reduce Motion.
+No dependency installation is required. Open `preview.html` in a modern browser for an interactive demo using the **same `client.js`** as DSH. The preview’s demo button plays five randomly selected clicks using the same shuffled sequence; it also respects Reduce Motion.
 
 `index.js` is the deliberately empty host entry; `client.js` registers a lazy browser module with DSH and owns all effects through `ctx.effect`. `cordis.patch.yml` adds one independently toggleable row. Public package metadata is exported through `package.json` and `locale/*`.
 
