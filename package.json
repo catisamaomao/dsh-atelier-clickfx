@@ -1,0 +1,27 @@
+{
+  "name": "dsh-atelier-clickfx",
+  "version": "1.1.0",
+  "description": "Theme-aware gold ripples, porcelain stars and periwinkle particles for DeepSeek Harness.",
+  "type": "module",
+  "main": "./index.js",
+  "exports": { ".": "./index.js", "./client": "./client.js", "./package.json": "./package.json", "./locale/*": "./locale/*" },
+  "dsh": {
+    "engines": { "dsh": ">=0.2.0-rc.2" },
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": { "platform": "web", "inject": [] }
+  },
+  "files": ["index.js", "client.js", "cordis.patch.yml", "icon.svg", "locale", "README.md", "README.zh.md", "LICENSE", "preview.html"],
+  "icon": "icon.svg",
+  "license": "MIT",
+  "author": "catisamaomao",
+  "repository": { "type": "git", "url": "git+https://github.com/catisamaomao/dsh-atelier-clickfx.git" },
+  "homepage": "https://github.com/catisamaomao/dsh-atelier-clickfx#readme",
+  "bugs": { "url": "https://github.com/catisamaomao/dsh-atelier-clickfx/issues" },
+  "keywords": ["deepseek-harness", "dsh", "dsh-plugin", "click-effects", "theme", "accessibility", "i18n"],
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check client.js && node --check index.js",
+    "pack:check": "npm pack --dry-run --json"
+  }
+}

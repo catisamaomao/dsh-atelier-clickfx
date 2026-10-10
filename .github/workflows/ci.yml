@@ -1,0 +1,31 @@
+name: Cross-platform checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      # This plugin has no build step, runtime dependencies or install scripts.
+      - name: Check JavaScript syntax
+        run: node --check index.js && node --check client.js
+      - name: Test package integration and simulated browser behavior
+        run: node --test
+      - name: Verify npm package contents
+        run: npm pack --dry-run --json --ignore-scripts
